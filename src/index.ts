@@ -8,6 +8,10 @@ import {
   logErrors,
 } from "./middlewares/error.handler";
 import morgan from "morgan";
+import swaggerUI from "swagger-ui-express";
+import swaggerJsDoc from "swagger-jsdoc";
+import path from "path";
+import fs from "fs";
 
 const app = express();
 const port = 3000;
@@ -34,7 +38,7 @@ const option = {
 app.use(cors(option));
 
 app.get("/", (req, res) => {
-  res.send("Hola desde mi servidor en express");
+  res.redirect("/api-docs");
 });
 
 routerApi(app);
@@ -42,6 +46,34 @@ routerApi(app);
 app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(errorHandler);
+
+const routeDir = path.join(__dirname, "./routes/api/v0/");
+const routerFiles = fs.readdirSync(routeDir).filter((file) => {
+  const filePath = path.join(routeDir, file);
+  return fs.statSync(filePath).isFile() && file.endsWith(".ts");
+});
+
+const swaggerSpec = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Zaiko - Api",
+      version: "1.0",
+    },
+    servers: [
+      {
+        url: "https://api-zaiko.vercel.app",
+      },
+    ],
+  },
+  apis: routerFiles.map((file) => path.join(routeDir, file)),
+};
+
+app.use(
+  "/api-docs",
+  swaggerUI.serve,
+  swaggerUI.setup(swaggerJsDoc(swaggerSpec))
+);
 
 app.listen(port, () => {
   console.log("Corriendo en el puerto: " + port);
