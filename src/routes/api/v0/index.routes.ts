@@ -1,10 +1,17 @@
 import express from "express";
 
-const IndexRouter = express.Router();
+import { IndexService } from "./../../../services/v0/index.services";
 
-IndexRouter.get("/", async (req, res) => {
-  const message = "Este es un mensaje de prueba";
-  res.status(201).json({ message });
+const router = express.Router();
+const service = new IndexService();
+
+router.get("/", async (req, res, next) => {
+  try {
+    const persons = await service.find();
+    res.json(persons);
+  } catch (error) {
+    next(error);
+  }
 });
 
-export { IndexRouter };
+export { router };
