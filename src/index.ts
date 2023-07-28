@@ -38,7 +38,7 @@ const option = {
 app.use(cors(option));
 
 app.get("/", (req, res) => {
-  res.redirect("/api-docs");
+  res.send("<h3>Hola desde mi servidor en express</h3>");
 });
 
 routerApi(app);
