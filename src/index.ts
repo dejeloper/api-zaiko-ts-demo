@@ -62,6 +62,9 @@ const swaggerSpec = {
     },
     servers: [
       {
+        url: "http://localhost:3000",
+      },
+      {
         url: "https://api-zaiko.vercel.app",
       },
     ],

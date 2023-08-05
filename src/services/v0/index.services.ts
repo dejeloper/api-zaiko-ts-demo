@@ -11,14 +11,14 @@ export class IndexService {
     );
   }
 
-  async find() {
+  async find(limit: number, offset: number) {
     try {
-      const query = `SELECT * FROM public."Persons"`;
+      const query = `SELECT * FROM public.personsactives(${limit}, ${offset});`;
       const result = await this.pool.query(query);
 
       return {
         success: true,
-        data: result.rows, // Utiliza result.rows para obtener los datos de la consulta
+        data: result.rows,
         message: "Ok",
         count: result.rowCount,
       };
