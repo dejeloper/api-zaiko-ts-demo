@@ -13,6 +13,9 @@ import swaggerJsDoc from "swagger-jsdoc";
 import path from "path";
 import fs from "fs";
 
+import { sequelize } from "./database/database";
+import "./models/index";
+
 const app = express();
 const port = 3000;
 
@@ -77,6 +80,17 @@ app.use(
   swaggerUI.serve,
   swaggerUI.setup(swaggerJsDoc(swaggerSpec))
 );
+
+async function conectionSEQ() {
+  try {
+    await sequelize.sync({ force: true });
+    console.log("Conexión Ok");
+  } catch (err) {
+    console.log("Conexión bad", err);
+  }
+}
+
+conectionSEQ();
 
 app.listen(port, () => {
   console.log("Corriendo en el puerto: " + port);
