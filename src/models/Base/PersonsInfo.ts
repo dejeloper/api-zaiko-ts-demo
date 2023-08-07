@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../../database/database";
 
-const PersonsInfoSchema = sequelize.define(
+const PersonsInfoModel = sequelize.define(
   "PersonsInfo",
   {
     Id: {
@@ -54,4 +54,4 @@ const PersonsInfoSchema = sequelize.define(
   }
 );
 
-export default PersonsInfoSchema;
+export default PersonsInfoModel;

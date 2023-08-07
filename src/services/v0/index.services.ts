@@ -1,7 +1,7 @@
 import boom from "@hapi/boom";
 import { pool } from "../../libs/postgres";
 
-export class IndexService {
+class IndexService {
   private pool;
 
   constructor() {
@@ -13,7 +13,7 @@ export class IndexService {
 
   async find(limit: number, offset: number) {
     try {
-      const query = `SELECT * FROM public.personsactives(${limit}, ${offset});`;
+      const query = `SELECT * FROM public."Persons";`;
       const result = await this.pool.query(query);
 
       return {
@@ -31,3 +31,5 @@ export class IndexService {
     }
   }
 }
+
+export { IndexService };

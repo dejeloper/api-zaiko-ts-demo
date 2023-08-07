@@ -1,59 +1,59 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../../database/database";
-import PersonsInfoSchema from "./PersonsInfo";
+import PersonsInfoModel from "./PersonsInfo";
 
-const PersonsSchema = sequelize.define(
+const PersonsModel = sequelize.define(
   "Persons",
   {
-    Id: {
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
     },
-    Name: {
+    name: {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    LastName: {
+    lastName: {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    DocumentType: {
+    documentType: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    DocumentNumber: {
+    documentNumber: {
       type: DataTypes.STRING(50),
       allowNull: false,
+      unique: true,
     },
-    DateBirthday: {
+    dateBirthday: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-    State: {
+    state: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 1001,
     },
-    Enabled: {
+    enabled: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
     },
-    DateCreated: {
+    dateCreated: {
       type: DataTypes.DATE,
-      allowNull: false,
-    },
-    UserCreated: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
       defaultValue: DataTypes.NOW,
     },
-    DateUpdate: {
+    userCreated: {
+      type: DataTypes.STRING(50),
+      defaultValue: "Admin",
+    },
+    dateUpdate: {
       type: DataTypes.DATE,
     },
-    UserUpdate: {
+    userUpdate: {
       type: DataTypes.STRING(50),
     },
   },
@@ -63,15 +63,15 @@ const PersonsSchema = sequelize.define(
   }
 );
 
-PersonsSchema.hasOne(PersonsInfoSchema, {
-  foreignKey: "Person",
-  sourceKey: "Id",
-});
+// PersonsSchema.hasOne(PersonsInfoSchema, {
+//   foreignKey: "Person",
+//   sourceKey: "Id",
+// });
 
-PersonsInfoSchema.belongsTo(PersonsSchema, {
-  foreignKey: "Person",
-  targetKey: "Id",
-  as: "Person_PersonInfo_Relation",
-});
+// PersonsInfoSchema.belongsTo(PersonsSchema, {
+//   foreignKey: "Person",
+//   targetKey: "Id",
+//   as: "Person_PersonInfo_Relation",
+// });
 
-export default PersonsSchema;
+export { PersonsModel };

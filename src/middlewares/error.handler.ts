@@ -38,8 +38,9 @@ function boomErrorHandler(
       message: payload.message,
       count: 0,
     });
+  } else {
+    next(err);
   }
-  next(err);
 }
 
 export { logErrors, errorHandler, boomErrorHandler };

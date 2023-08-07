@@ -1,28 +1,12 @@
 import express from "express";
+
 import { IndexService } from "./../../../services/v0/index.services";
 import { getLimitOffset } from "../../../utils/getLimitOffset";
 
-const router = express.Router();
+const indexRouterV0 = express.Router();
 const service = new IndexService();
 
-/**
- * @swagger
- * /api/v0/persons:
- *  get:
- *    summary: Get all Persons
- *    tags:
- *      - Persons
- *    responses:
- *      200:
- *        description: all persons
- *        content:
- *          application/json:
- *            schema:
- *              type: array
- *              items:
- *                type: object
- */
-router.get("/", async (req, res, next) => {
+indexRouterV0.get("/", async (req, res, next) => {
   try {
     const { l, o } = req.query;
     const limit = getLimitOffset(l, 10);
@@ -35,4 +19,4 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-export { router };
+export { indexRouterV0 };
