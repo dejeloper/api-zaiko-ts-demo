@@ -13,6 +13,16 @@ class PersonsService {
     );
   }
 
+  async findAll(limit: number, offset: number) {
+    try {
+      const listPersons = await PersonsModel.findAll();
+
+      return listPersons;
+    } catch (error) {
+      throw boom.badGateway("Error al consultar Personas");
+    }
+  }
+
   async create(person: IPersons) {
     try {
       const {
