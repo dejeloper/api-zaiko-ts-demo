@@ -13,15 +13,17 @@ class PersonsService {
     );
   }
 
-  async create({
-    name,
-    lastName,
-    documentType,
-    documentNumber,
-    dateBirthday,
-    state,
-  }: IPersons) {
+  async create(person: IPersons) {
     try {
+      const {
+        name,
+        lastName,
+        documentType,
+        documentNumber,
+        dateBirthday,
+        state,
+      } = person;
+
       const newPerson = await PersonsModel.create({
         name,
         lastName,
